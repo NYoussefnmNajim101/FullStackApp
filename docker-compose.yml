@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  server:
+    build: ./employee
+    restart: always
+    ports: 
+      - 8075:8075
+    networks:
+      - mysql-net
+    container_name: spring_server
+    
+  reactapp:
+    build: ./employee_app
+    networks:
+      - mysql-net
+    ports:
+      - 3000:3000
+    container_name: employee_ui
+    depends_on:
+      - server 
+networks:
+  mysql-net:
+    name: mysql-net
